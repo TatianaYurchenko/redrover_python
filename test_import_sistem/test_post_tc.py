@@ -1,10 +1,12 @@
 import pytest
+import random
 from lesson1.smart_validation import User
 import requests
 from pprint import pprint
 URL = 'http://127.0.0.1:8000/testcases/'
+id_ = random.randint(3, 9)
 data = {
-    "id": 88156,
+    "id": id_,
     "name": "test1",
     "description": "Проверить ответ от сервера",
     "steps": [
@@ -14,7 +16,7 @@ data = {
     "priority": "низкий"
 }
 data2 = {
-    "id": 564789,
+    "id": id_,
     "name": "test2",
     "description": "проверить объект в формате JSON с запрошенными полями",
     "steps": [
