@@ -4,7 +4,7 @@ from lesson1.smart_validation import User
 import requests
 from pprint import pprint
 URL = 'http://127.0.0.1:8000/testcases/'
-id_ = random.randint(3, 9)
+id_ = random.randint(1000, 9999)
 data = {
     "id": id_,
     "name": "test1",
