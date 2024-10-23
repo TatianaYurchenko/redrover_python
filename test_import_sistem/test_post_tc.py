@@ -27,9 +27,11 @@ def create_tc():
     response = requests.post(URL, json=data)
     id = response.json()['id']
     return id
+
 def test_create_tc():
     response = requests.get(URL+f'{create_tc()}')
     assert data['id'] == response.json()['id'] and data["name"] == response.json()["name"]
+
 def test_get_tc():
     create_tc()
     response = requests.get(URL)
@@ -42,3 +44,7 @@ def test_get_tc_by_id():
 def test_update_tc():
     response = requests.put(URL+f'{create_tc()}', json=data2)
     assert data2['id'] == response.json()['id'] and data2["name"] == response.json()["name"]
+
+def test_delete_tc():
+    response = requests.delete(URL + f'{create_tc()}')
+    assert response.json()['detail'] == 'Test case deleted.'
