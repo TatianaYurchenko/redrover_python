@@ -4,7 +4,7 @@ import requests
 from pprint import pprint
 URL = 'http://127.0.0.1:8000/testcases/'
 data = {
-    "id": 0,
+    "id": 88156,
     "name": "test1",
     "description": "Проверить ответ от сервера",
     "steps": [
@@ -14,7 +14,7 @@ data = {
     "priority": "низкий"
 }
 data2 = {
-    "id": 6,
+    "id": 564789,
     "name": "test2",
     "description": "проверить объект в формате JSON с запрошенными полями",
     "steps": [
