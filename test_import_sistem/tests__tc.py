@@ -5,8 +5,6 @@ from faker import Faker
 faker = Faker()
 
 URL = 'http://127.0.0.1:8000/testcases/'
-a = faker.sentence(1)
-print(a)
 data = {
     "id": faker.random_number(3),
     "name": faker.text(8),
