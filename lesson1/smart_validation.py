@@ -11,5 +11,3 @@ class User(BaseModel):
     age: int
 
 print(User(**user_dict).model_dump())
-a = faker.text(8)
-print(a)
