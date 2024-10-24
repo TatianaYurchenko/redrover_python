@@ -1,14 +1,16 @@
 import pytest
-import random
-from lesson1.smart_validation import User
 import requests
-from pprint import pprint
+from faker import Faker
+
+faker = Faker()
+
 URL = 'http://127.0.0.1:8000/testcases/'
-id_ = random.randint(1000, 9999)
+a = faker.sentence(1)
+print(a)
 data = {
-    "id": id_,
-    "name": "test1",
-    "description": "Проверить ответ от сервера",
+    "id": faker.random_number(3),
+    "name": faker.text(8),
+    "description": faker.sentence(6),
     "steps": [
         "string"
     ],
@@ -16,9 +18,9 @@ data = {
     "priority": "низкий"
 }
 data2 = {
-    "id": id_,
-    "name": "test2",
-    "description": "проверить объект в формате JSON с запрошенными полями",
+    "id": faker.random_number(4),
+    "name": faker.text(8),
+    "description": faker.sentence(6),
     "steps": [
         "string"
     ],
