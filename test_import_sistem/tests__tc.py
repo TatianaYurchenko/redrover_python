@@ -47,7 +47,6 @@ def test_create_tc():
 def test_create_tc_negative():
     response = requests.post(URL, json=data3)
     assert response.json()['detail'][0]['type'] == 'string_too_long'
-    print(response.json())
 
 def test_get_tc():
     create_tc()
