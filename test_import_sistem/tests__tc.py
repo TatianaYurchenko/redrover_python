@@ -25,6 +25,16 @@ data2 = {
     "expected_result": "string",
     "priority": "высокий"
 }
+data3 = {
+    "id": faker.random_number(4),
+    "name": faker.lexify(text="?" * 101),
+    "description": faker.sentence(6),
+    "steps": [
+        "string"
+    ],
+    "expected_result": "string",
+    "priority": "высокий"
+}
 def create_tc():
     response = requests.post(URL, json=data)
     id = response.json()['id']
@@ -33,6 +43,11 @@ def create_tc():
 def test_create_tc():
     response = requests.get(URL+f'{create_tc()}')
     assert data['id'] == response.json()['id'] and data["name"] == response.json()["name"]
+
+def test_create_tc_negative():
+    response = requests.post(URL, json=data3)
+    assert response.json()['detail'][0]['type'] == 'string_too_long'
+    print(response.json())
 
 def test_get_tc():
     create_tc()
