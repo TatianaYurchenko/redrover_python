@@ -13,12 +13,17 @@ class Priority(str, Enum):
     medium = "средний"
     high = "высокий"
 
+def generate_id():
+    return faker.random_number(4)
+
+def generate_name():
+    return faker.text(8)
 
 class Data_case(BaseModel):
-    id: int = Field(default=faker.random_number(4), ge=0, le=120)
-    name: str = Field(default=faker.text(8))
+    id: int = Field(default=generate_id(), ge=0, le=120)
+    name: str = Field(default=generate_name())
     description: str = Field(default=faker.sentence(6))
-    steps: list[str] = Field(default=[faker.text(8)])
+    steps: list[str] = Field(default=[generate_name()])
     expected_result: str = Field(default=faker.sentence(6))
     priority: Priority = Field(default=Priority.medium)
 
