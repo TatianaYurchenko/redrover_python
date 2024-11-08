@@ -3,6 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
 from time import sleep
 @pytest.fixture
 def chrome_options():
@@ -46,6 +47,18 @@ def test_chek_the_registration_functionality(driver, wait):
     assert spinner.is_displayed()
     success_message = wait.until(EC.visibility_of_element_located(("xpath", "//p[@id='successMessage']")))
     assert success_message.text == 'Вы успешно зарегистрированы!'
+
+def test_add_and_delete_element(driver, wait):
+    driver.get("https://the-internet.herokuapp.com/add_remove_elements/")
+    driver.find_element("xpath", "//button[text()='Add Element']").click()
+    btn_delete = wait.until(EC.visibility_of_element_located(("xpath", "//button[text()='Delete']")))
+    btn_delete.click()
+    # try:
+    #     wait.until(EC.invisibility_of_element_located(("xpath", "//button[text()='Delete']")))
+    #     print("Элемент успешно удален")
+    # except TimeoutException:
+    #     print("Элемент не был удален")
+    assert len(driver.find_elements("xpath", "//button[text()='Delete']")) == 0, "Элемент не удален"
 
 
 
