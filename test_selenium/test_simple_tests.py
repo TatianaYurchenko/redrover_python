@@ -61,6 +61,22 @@ def test_add_and_delete_element(driver, wait):
     assert len(driver.find_elements("xpath", "//button[text()='Delete']")) == 0, "Элемент не удален"
 
 
+def test_base_auth(driver, wait):
+    # Передаем логин и пароль в URL: https://username:password@site
+    username = "admin"
+    password = "admin"
+    url = f"https://{username}:{password}@the-internet.herokuapp.com/basic_auth"
+
+    driver.get(url)
+
+    # Проверка, что страница загружена
+    success_message = wait.until(
+        EC.visibility_of_element_located(("xpath", "//p[contains(text(),'Congratulations!')]")))
+    assert "Congratulations!" in success_message.text
+
+
+
+
 
 
 
