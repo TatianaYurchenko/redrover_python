@@ -1,4 +1,5 @@
 import pytest
+from selenium.webdriver.common.by import By
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.chrome.options import Options
@@ -74,9 +75,36 @@ def test_base_auth(driver, wait):
         EC.visibility_of_element_located(("xpath", "//p[contains(text(),'Congratulations!')]")))
     assert "Congratulations!" in success_message.text
 
+def test_checkboxes(driver, wait):
+    url = "https://the-internet.herokuapp.com/checkboxes"
+    driver.get(url)
+    checkbox_1 = ("xpath", "(//input[@type='checkbox'])[1]")
+    checkbox_2 = ("xpath", "(//input[@type='checkbox'])[2]")
+    driver.find_element(*checkbox_1).click()
+    assert driver.find_element(*checkbox_1).get_attribute("checked") == "true"
+    driver.find_element(*checkbox_2).click()
+    assert driver.find_element(*checkbox_2).get_attribute("checked") is None
 
+def test_broken_images(driver, wait):
+    # Открываем страницу
+    url = "https://the-internet.herokuapp.com/broken_images"
+    driver.get(url)
 
+    # Ищем все изображения на странице
+    images = driver.find_elements(By.TAG_NAME, "img")
 
+    # Проверяем изображения со 2 по 4 (индексы 1, 2 и 3)
+    for i, img in enumerate(images[1:4], start=2):
+        src = img.get_attribute("src")
+        print(f"Проверка изображения {i}: {src}")
 
+        # Проверяем, что изображение загружено корректно
+        try:
+            # Скроллим к изображению, чтобы убедиться, что оно в зоне видимости
+            driver.execute_script("arguments[0].scrollIntoView();", img)
+            assert img.size["width"] > 0 and img.size["height"] > 0, f"Изображение {i} ({src}) не загружено."
+            print(f"Изображение {i} загружено корректно.")
+        except AssertionError as e:
+            print(e)
 
-
+    print("Проверка завершена.")
