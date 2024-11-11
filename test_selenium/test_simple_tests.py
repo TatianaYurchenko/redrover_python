@@ -101,7 +101,7 @@ def test_broken_images(driver, wait):
         try:
             # Скроллим к изображению, чтобы убедиться, что оно в зоне видимости
             driver.execute_script("arguments[0].scrollIntoView();", img)
-            assert img.size["width"] > 0 and img.size["height"] > 0, f"Изображение {i} ({src}) не загружено."
+            assert img.size["width"] > 0 and img.size["height"] > 0, f"Изображение {i+1} ({src}) не загружено."
             print(f"Изображение {i+1} загружено корректно.")
         except AssertionError as e:
             print(e)
