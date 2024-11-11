@@ -79,11 +79,16 @@ def test_base_auth(driver, wait):
 def test_checkboxes(driver, wait):
     url = "https://the-internet.herokuapp.com/checkboxes"
     driver.get(url)
+    # Определяем локаторы для первого и второго чекбоксов
     checkbox_1 = ("xpath", "(//input[@type='checkbox'])[1]")
     checkbox_2 = ("xpath", "(//input[@type='checkbox'])[2]")
+    # Нажимаем на первый чекбокс, чтобы изменить его состояние
     driver.find_element(*checkbox_1).click()
+    # Проверяем, что первый чекбокс отмечен (атрибут "checked" должен быть "true")
     assert driver.find_element(*checkbox_1).get_attribute("checked") == "true"
+    # Нажимаем на второй чекбокс, чтобы изменить его состояние
     driver.find_element(*checkbox_2).click()
+    # Проверяем, что второй чекбокс теперь не отмечен (атрибут "checked" отсутствует)
     assert driver.find_element(*checkbox_2).get_attribute("checked") is None
 
 
