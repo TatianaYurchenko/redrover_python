@@ -1,4 +1,5 @@
 import pytest
+import requests
 from selenium.webdriver.common.by import By
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
@@ -85,6 +86,7 @@ def test_checkboxes(driver, wait):
     driver.find_element(*checkbox_2).click()
     assert driver.find_element(*checkbox_2).get_attribute("checked") is None
 
+
 def test_broken_images(driver, wait):
     # Открываем страницу
     url = "https://the-internet.herokuapp.com/broken_images"
@@ -95,14 +97,18 @@ def test_broken_images(driver, wait):
     # Проверяем изображения со 2 по 4 (индексы 1, 2, 3)
     for i, img in enumerate(images[1:4]):
         src = img.get_attribute("src")
-        print(f"Проверка изображения {i+1}: {src}")
+        print(f"Проверка изображения {i + 1}: {src}")
 
         # Проверяем, что изображение загружено корректно
         try:
             # Скроллим к изображению, чтобы убедиться, что оно в зоне видимости
             driver.execute_script("arguments[0].scrollIntoView();", img)
-            assert img.size["width"] > 0 and img.size["height"] > 0, f"Изображение {i+1} ({src}) не загружено."
-            print(f"Изображение {i+1} загружено корректно.")
+
+            # Проверяем доступность изображения через HTTP-запрос
+            response = requests.get(src)
+            assert response.status_code == 200, f"Изображение {i + 1} ({src}) не загружено. Статус код: {response.status_code}"
+            assert img.size["width"] > 0 and img.size["height"] > 0, f"Изображение {i + 1} ({src}) не загружено на странице."
+            print(f"Изображение {i + 1} загружено корректно.")
         except AssertionError as e:
             print(e)
 
